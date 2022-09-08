@@ -19,6 +19,7 @@ class CekPenjemputanController extends Controller
                     ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
                     ->where('tbldriver.user_id', Auth::user()->id)
                     ->where('status_bayar', 'Terkonfirmasi')
+                    ->select('tblpemesanan.*', 'destinasi.*', 'tblmobil.*', 'tbluser.nama', 'tblpenjemputan.*')
                     ->get();
 
         return view('Pengemudi.DataJemput.Index', $data);

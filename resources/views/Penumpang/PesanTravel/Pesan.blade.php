@@ -76,13 +76,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Alamat <span class="text-red">*</span></label>
-                                <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat">{{Auth::user()->alamat != null ? Auth::user()->alamat : ''}}</textarea>
+                                <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat" required>{{Auth::user()->alamat != null ? Auth::user()->alamat : ''}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Alamat (Link Google Maps) <span class="text-red">*</span></label>
-                                <textarea class="form-control" rows="5" name="url_alamat" placeholder="https://goo.gl/maps/xxxx"></textarea>
+                                <textarea class="form-control" rows="5" name="url_alamat" placeholder="https://goo.gl/maps/xxxx" required></textarea>
                             </div>
                         </div>
                         <hr>
@@ -95,7 +95,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Tanggal Perjalanan</label>
-                                <input type="date" class="form-control" name="tgl_perjalanan" id="tgl_perjalanan">
+                                <input type="date" class="form-control" name="tgl_perjalanan" id="tgl_perjalanan" required>
                             </div>
                         </div>
                     </div>

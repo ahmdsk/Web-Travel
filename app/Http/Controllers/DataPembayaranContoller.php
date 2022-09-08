@@ -15,7 +15,7 @@ class DataPembayaranContoller extends Controller
             ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
             ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
             ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
-            ->get();
+            ->orderBy('id_pesanan', 'desc')->get();
 
         return view('Admin.Pembayaran.Index', $data);
     }
