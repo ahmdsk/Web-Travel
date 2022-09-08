@@ -65,10 +65,10 @@
                     <a class="side-menu__item has-link" href="{{route('pembayaran')}}"><i
                             class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span></a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="side-menu__item has-link" href="#"><i
                             class="side-menu__icon fe fe-message-circle"></i><span class="side-menu__label">Kelola Rating / Masukan</span></a>
-                </li> 
+                </li>  --}}
                 @elseif(Auth::user()->role == 'Agent')
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pengemudi')}}"><i
