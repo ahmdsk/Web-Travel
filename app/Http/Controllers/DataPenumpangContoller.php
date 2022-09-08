@@ -72,6 +72,7 @@ class DataPenumpangContoller extends Controller
                     ->where('id', $request->id_user)
                     ->update([
                         'username'      => $request->username,
+                        'password'      => bcrypt('12345678'),
                         'nama'          => $request->nama_lengkap,
                         'email'         => $request->email,
                         'no_telp'       => $request->no_telp,
@@ -89,6 +90,7 @@ class DataPenumpangContoller extends Controller
                     ->where('id', $request->id_user)
                     ->update([
                         'username'      => $request->username,
+                        'password'      => bcrypt('12345678'),
                         'nama'          => $request->nama_lengkap,
                         'email'         => $request->email,
                         'no_telp'       => $request->no_telp,

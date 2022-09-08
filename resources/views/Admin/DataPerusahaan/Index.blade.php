@@ -7,7 +7,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center" style="width: 100%">
                     <h3 class="card-title">{{$title}}</h3>
-                    <button class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#input-modal">Tambah Penumpang</button>
+                    <button class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#input-modal">Tambah Perusahaan</button>
                 </div>
             </div>
             <div class="card-body">

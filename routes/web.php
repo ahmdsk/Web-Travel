@@ -122,9 +122,13 @@ Route::middleware('auth')->group(function() {
 
 
         // Pesan Travel
+        Route::get('/pesan/kecamatan', [PesananController::class, 'ambilKecamatan'])->name('penumpang.kecamatan');
+        Route::get('/pesan/harga-jemput', [PesananController::class, 'ambilHargaJemput'])->name('penumpang.cekharga');
+
         Route::get('/pesan', [PesananController::class, 'pesan'])->name('penumpang.pesan');
         Route::get('/pesan/cari', [PesananController::class, 'cari'])->name('penumpang.cari');
         Route::get('/pesan/{id}', [PesananController::class, 'pesanTravel'])->name('penumpang.pesanTravel');
+        Route::post('/pesan-travel', [PesananController::class, 'pesanTravelPost'])->name('penumpang.pesanTravelPost');
 
         // Data Pesanan
         Route::get('/data-pesanan', [PesananController::class, 'dataPesanan'])->name('penumpang.pesanan');
