@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataAgentController;
 use App\Http\Controllers\DataDestinasiContoller;
 use App\Http\Controllers\DataMobilContoller;
+use App\Http\Controllers\DataPembayaranContoller;
 use App\Http\Controllers\DataPengemudiContoller;
 use App\Http\Controllers\DataPenggunaContoller;
 use App\Http\Controllers\DataPenjemputanContoller;
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function() {
 
         // Data Pembayaran
         Route::get('/data-pembayaran', [DataPembayaranContoller::class, 'index'])->name('pembayaran');
+        Route::post('/data-pembayaran/konfirmasi', [DataPembayaranContoller::class, 'konfirmasi'])->name('pembayaran.konfirmasi');
 
         // Data masukan
         Route::get('/data-masukan', [DataMasukanContoller::class, 'index'])->name('masukan');
