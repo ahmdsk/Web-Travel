@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DataPembayaranContoller extends Controller
@@ -28,7 +29,13 @@ class DataPembayaranContoller extends Controller
                 ]);
 
         if($konfirmasi){
-            return back()->with('success', 'Berhasil Update Status Pesanan!');
+            if(Auth::user()->role == 'Pengemudi'){
+                $pesan = 'Berhasil Konfirmasi Antar Penumpang!';
+            }else{
+                $pesan = 'Berhasil Update Status Pesanan!';
+            }
+
+            return back()->with('success', $pesan);
         }else{
             return back()->with('warning', 'Gagal Update Status Pesanan!');
         }

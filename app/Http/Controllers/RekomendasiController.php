@@ -109,7 +109,7 @@ class RekomendasiController extends Controller
             }
 
             // panggil function untuk cek data pembilang, dan penyebut serta user yang ingin di cek (user login)
-            $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
+            return $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
 
             foreach($rekomendasi as $idpesanan => $rating){
                 $produkRekomendasi   = DB::table('destinasi')
@@ -125,26 +125,28 @@ class RekomendasiController extends Controller
                 
                     if(count($dataRating) > 0){
                         array_push($data['rekomendasi'], [
-                            'id'            => $pr->id,
-                            'product_name'	=> $pr->product_name,
-                            'product_price'	=> $pr->product_price,
-                            'category_id'   => $pr->category_id,
-                            'gambar'	    => $pr->gambar,
-                            'jenis_gambar'	=> $pr->jenis_gambar,
+                            'id_mobil'          => $pr->id_mobil,
+                            'foto_mobil'        => $pr->foto_mobil,
+                            'nama_destinasi'    => $pr->nama_destinasi,
+                            'harga_destinasi'   => $pr->harga_destinasi,
+                            'jumlah_kursi'      => $pr->jumlah_kursi,
+                            'merk_mobil'        => $pr->merk_mobil,
+                            'warna_mobil'       => $pr->warna_mobil,
                             'jumlah_rating' => [
                                 'rating'    => array_sum(DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating')->toArray()) / DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->count()
                             ]
                         ]);
                     }else{
                         array_push($data['rekomendasi'], [
-                            'id'            => $pr->id,
-                            'product_name'	=> $pr->product_name,
-                            'product_price'	=> $pr->product_price,
-                            'category_id'   => $pr->category_id,
-                            'gambar'	    => $pr->gambar,
-                            'jenis_gambar'	=> $pr->jenis_gambar,
+                            'id_mobil'          => $pr->id_mobil,
+                            'foto_mobil'        => $pr->foto_mobil,
+                            'nama_destinasi'    => $pr->nama_destinasi,
+                            'harga_destinasi'   => $pr->harga_destinasi,
+                            'jumlah_kursi'      => $pr->jumlah_kursi,
+                            'merk_mobil'        => $pr->merk_mobil,
+                            'warna_mobil'       => $pr->warna_mobil,
                             'jumlah_rating' => [
-                                'rating'    => 0
+                                'rating'    => 0,
                             ]
                         ]);
                     }
