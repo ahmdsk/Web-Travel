@@ -116,7 +116,7 @@
                     <p>Silahkan Pilih Kursi! <span class="text-muted">(Mohon Pilih Kursi Yang Belum Di Cek!)</span></p>
                     <div class="row">
                         @for ($i = 1; $i <= $mobil->jumlah_kursi; $i++)
-                            @if ($cekKursi != null)    
+                            @if (count($cekKursi) > 0)
                             <div class="col-md-4">
                                 <label class="custom-control custom-checkbox-md">
                                 @foreach ($cekKursi as $kursi)

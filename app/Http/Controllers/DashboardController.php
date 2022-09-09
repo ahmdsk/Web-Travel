@@ -14,7 +14,7 @@ class DashboardController extends Controller
         if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Agent'){
 
             $data['jumlahPendapatan'] = DB::table('tblpemesanan')
-                    ->where('status_bayar', 'Terkonfirmasi')
+                    ->where('status_bayar', 'Selesai')
                     ->sum('total_harga');
 
             $data['jumlahAgent']     = DB::table('tbluser')->where('role', 'Agent')->count();

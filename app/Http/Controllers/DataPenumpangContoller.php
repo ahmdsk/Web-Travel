@@ -23,6 +23,7 @@ class DataPenumpangContoller extends Controller
             
             $tambahDataUser = DB::table('tbluser')->insert([
                 'username'      => $request->username,
+                'password'      => bcrypt('12345678'),
                 'nama'          => $request->nama_lengkap,
                 'email'         => $request->email,
                 'password'      => bcrypt($request->password),
@@ -39,6 +40,7 @@ class DataPenumpangContoller extends Controller
         }else{
             $tambahDataUser = DB::table('tbluser')->insert([
                 'username'      => $request->username,
+                'password'      => bcrypt('12345678'),
                 'nama'          => $request->nama_lengkap,
                 'email'         => $request->email,
                 'password'      => bcrypt($request->password),

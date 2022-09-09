@@ -16,6 +16,7 @@ use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\DataRekeningPerusahaanController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\RekomendasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,8 @@ Route::middleware('guest')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
+    Route::get('/cf', [RekomendasiController::class, 'rekomendasi']);
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
