@@ -15,6 +15,7 @@ use App\Http\Controllers\DataPenumpangContoller;
 use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\DataRekeningPerusahaanController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -134,5 +135,10 @@ Route::middleware('auth')->group(function() {
 
         // Data Pesanan
         Route::get('/data-pesanan', [PesananController::class, 'dataPesanan'])->name('penumpang.pesanan');
+
+        // Beri Rating
+        Route::get('/rating/{id}', [RatingController::class, 'beriRating'])->name('beriRating');
+        Route::post('/rating/{id}', [RatingController::class, 'ratingPost'])->name('rating');
+        Route::post('/cekrating/{id}', [RatingController::class, 'cekRating']);
     // });
 });

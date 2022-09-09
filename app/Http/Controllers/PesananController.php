@@ -57,6 +57,8 @@ class PesananController extends Controller
                 ->join('tblpenjemputan', 'tblpenjemputan.id', '=', 'tblpemesanan.penjemputan_id')
                 ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
                 ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
+                ->leftjoin('tblrating', 'tblrating.id_pesanan', '=', 'tblpemesanan.id_pesanan')
+                ->select('tblpemesanan.*', 'destinasi.*', 'tblpenjemputan.*', 'tbluser.*', 'tblmobil.*', 'tblrating.rating')
                 ->where('user_id', Auth::user()->id)
                 ->get();
 
@@ -66,7 +68,6 @@ class PesananController extends Controller
     public function pesanTravel($id){
         $data['title']  = 'Pesan Travel';
         $data['ibukota']     = DB::table('tblpenjemputan')->distinct('nama_kota')->pluck('nama_kota');
-        // $data['kecamatan']   = DB::table('tblpenjemputan')->distinct('kecamatan')->pluck('kecamatan');
         $data['mobil']   = DB::table('destinasi')
                     ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
                     ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
@@ -83,8 +84,6 @@ class PesananController extends Controller
     }
 
     public function pesanTravelPost(Request $request){
-        // dd($request->all());
-
         $file_bukti = $request->bukti_bayar;
         $file_bukti_baru = rand().'.'.$file_bukti->getClientOriginalExtension();
         $file_bukti->move(public_path('bukti_bayar/'), $file_bukti_baru);

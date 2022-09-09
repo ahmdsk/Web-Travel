@@ -65,9 +65,53 @@
                                     @elseif ($p->status_bayar == 'Terkonfirmasi')
                                     <span class="badge bg-success">Terkonfirmasi</span>
                                     @elseif ($p->status_bayar == 'Selesai')
-                                    <a href="#" class="btn btn-sm btn-primary">Beri Nilai</a>
+                                        @if ($p->rating == null)
+                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#rating-{{$p->id_pesanan}}"
+                                        class="btn btn-sm btn-primary">Beri Nilai</a>
+                                        @else
+                                        <button class="btn btn-sm btn-primary" disabled>Sudah Memberi Nilai</button>
+                                        @endif
                                     @endif
                                 </td>
+
+                                <div class="modal fade" id="rating-{{$p->id_pesanan}}">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content modal-content-demo">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title">Beri Rating Pesanan</h6>
+                                                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{route('rating', $p->id_pesanan)}}" method="post">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="col-form-label">Rating / Ulasan</label>
+                                                                <input class="form-control" type="number" name="rating" id="rating" min="1" max="5" placeholder="1-5">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="keterangan" class="col-form-label">Keterangan (Opsional)</label>
+                                                                <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Tulis Saran"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn ripple btn-success" type="submit" id="btnRating">Beri Rating</button>
+                                                    <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
                             @empty
                             <tr class="text-center">
