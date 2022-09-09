@@ -46,9 +46,9 @@
                                     @if ($p->status_bayar == 'Pending')
                                     <span class="badge bg-warning text-dark">Pending</span>
                                     @elseif ($p->status_bayar == 'Terkonfirmasi')
-                                    <span class="badge bg-success">Terkonfirmasi</span>
+                                    <span class="badge bg-success">Selesai</span>
                                     @elseif ($p->status_bayar == 'Selesai')
-                                    <span class="badge bg-primary">Selesai</span>
+                                    <span class="badge bg-success">Selesai</span>
                                     @endif
                                 </td>
                                 <td>({{$p->no_polisi}}) {{$p->merk_mobil}} - {{$p->warna_mobil}}</td>
@@ -64,7 +64,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#konfirmasi-{{$p->id_pesanan}}">Konfirmasi</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#konfirmasi-{{$p->id_pesanan}}">Konfirmasi Pembayaran</button>
 
                                     <div class="modal fade" id="konfirmasi-{{$p->id_pesanan}}">
                                         <div class="modal-dialog" role="document">
@@ -79,30 +79,14 @@
                                                     <div class="modal-body">
                                                         @csrf
                                                         <input type="hidden" name="id_pesanan" value="{{$p->id_pesanan}}">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="mb-3">
-                                                                    <label for="no_telp" class="col-form-label">Status Pembayaran</label> <br>
-                                                                    <select name="status_bayar" class="form-select">
-                                                                        @php
-                                                                            $statusTerpilih = $p->status_bayar;
-                                                                            $status = ['Pending', 'Terkonfirmasi', 'Selesai'];
-                                                                        @endphp
-                                                                        @foreach ($status as $s)
-                                                                            @if ($s == $p->status_bayar)
-                                                                            <option value="{{$p->status_bayar}}" selected>{{$p->status_bayar}}</option>
-                                                                            @else
-                                                                            <option value="{{$s}}">{{$s}}</option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                        <input type="hidden" name="status_bayar" value="Terkonfirmasi">
+
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <div>
+                                                                <button class="btn ripple btn-success" type="submit">Simpan</button>
+                                                                <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn ripple btn-success" type="submit">Simpan</button>
-                                                        <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
                                                     </div>
                                                 </form>
                                             </div>

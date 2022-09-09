@@ -40,7 +40,8 @@
                                 <td>{{$p->nama_kota}}, {{$p->kecamatan}} - {{$p->nama_destinasi}}</td>
                                 <td>({{$p->no_polisi}}) {{$p->merk_mobil}} - {{$p->warna_mobil}}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detail-{{$p->id_pesanan}}">Detail Alamat</a>
+                                    <button class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#detail-{{$p->id_pesanan}}">Detail Alamat</a>
+                                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#konfir-{{$p->id_pesanan}}">Konfirmasi Antar</a>
                                 </td>
                                 <div class="modal fade" id="detail-{{$p->id_pesanan}}">
                                     <div class="modal-dialog" role="document">
@@ -68,6 +69,34 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="konfir-{{$p->id_pesanan}}">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content modal-content-demo">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title">Konfirmasi Antar</h6>
+                                                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{route('pembayaran.konfirmasi')}}" method="post">
+                                                    <div class="modal-body">
+                                                        @csrf
+                                                        <input type="hidden" name="id_pesanan" value="{{$p->id_pesanan}}">
+                                                        <input type="hidden" name="status_bayar" value="Selesai">
+
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <div>
+                                                                <button class="btn ripple btn-success" type="submit">Simpan</button>
+                                                                <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
