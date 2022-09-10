@@ -25,7 +25,8 @@ class UserSeeder extends Seeder
             'umur'      => 27,
             'nik'       => '1871020304050',
             'agama'     => 'Islam',
-            'alamat'    => 'Bandar Lampung'
+            'alamat'    => 'Bandar Lampung',
+            'status_aktif' => 1,
         ]);
     }
 }
