@@ -20,7 +20,7 @@ class CreatePemesananTable extends Migration
             $table->date('tgl_perjalanan');
             $table->text('url_alamat')->nullable();
             $table->text('detail_penjemputan');
-            $table->string('bukti_bayar');
+            $table->string('bukti_bayar')->nullable();
             $table->integer('no_kursi');
             $table->foreignId('destinasi_id')->constrained('destinasi')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('penjemputan_id')->constrained('tblpenjemputan')->onDelete('cascade')->onUpdate('cascade');

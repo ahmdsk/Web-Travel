@@ -75,14 +75,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Alamat <span class="text-red">*</span></label>
+                                <label class="form-label">Alamat Lengkap Serta Patokan Penjemputan <span class="text-red">*</span></label>
                                 <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat" required>{{Auth::user()->alamat != null ? Auth::user()->alamat : ''}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Alamat (Link Google Maps) <span class="text-red">*</span></label>
-                                <textarea class="form-control" rows="5" name="url_alamat" placeholder="https://goo.gl/maps/xxxx" required></textarea>
+                                <label class="form-label">Alamat (Link Google Maps)</label>
+                                <textarea class="form-control" rows="5" name="url_alamat" placeholder="https://goo.gl/maps/xxxx"></textarea>
                             </div>
                         </div>
                         <hr>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Tanggal Perjalanan</label>
+                                <label class="form-label">Tanggal Perjalanan <span class="text-red">*</span></label>
                                 <input type="date" class="form-control" name="tgl_perjalanan" id="tgl_perjalanan" required>
                             </div>
                         </div>
@@ -114,6 +114,7 @@
                 </div>
                 <div class="card-body">
                     <p>Silahkan Pilih Kursi! <span class="text-muted">(Mohon Pilih Kursi Yang Belum Di Cek!)</span></p>
+                    <p><span style="color: red"><b>Perhatian!</b> Semakin Kecil No Kursi, Menandakan Duduk Di Depan.</span></p>
                     <div class="row">
                         @for ($i = 1; $i <= $mobil->jumlah_kursi; $i++)
                             @if (count($cekKursi) > 0)
@@ -139,7 +140,7 @@
             </div>
             <div class="card cart">
                 <div class="card-header">
-                    <h3 class="card-title">Upload Bukti Bayar</h3>
+                    <h3 class="card-title">Upload Bukti Bayar (Opsional)</h3>
                 </div>
                 <div class="card-body">
                     <div class="">
@@ -153,7 +154,7 @@
     
                     <div class="mt-3">
                         <label for="">Upload Bukti Bayar (Maksimal 2 MB)</label>
-                        <input type="file" name="bukti_bayar" class="form-control" required>
+                        <input type="file" name="bukti_bayar" class="form-control">
                     </div>
                 </div>
             </div>

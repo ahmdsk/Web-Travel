@@ -135,7 +135,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
-                                                                    <label for="foto" class="col-form-label">Foto Profil (Opsional)</label>
+                                                                    <label for="foto" class="col-form-label">Foto Profil (Opsional) <span class="text-muted" style="font-size: 10px">Maksimal 2MB</span></label>
                                                                     <input type="file" class="form-control" id="foto" name="foto">
                                                                 </div>
                                                             </div>
@@ -278,7 +278,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="foto" class="col-form-label">Foto Profil (Opsional)</label>
+                                <label for="foto" class="col-form-label">Foto Profil (Opsional) <span class="text-muted" style="font-size: 10px">Maksimal 2MB</span></label>
                                 <input type="file" class="form-control" id="foto" name="foto">
                             </div>
                         </div>

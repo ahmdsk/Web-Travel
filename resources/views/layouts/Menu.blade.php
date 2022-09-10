@@ -1,3 +1,12 @@
+@php
+    $pesanan = DB::table('tblpemesanan')
+            ->join('destinasi', 'destinasi.id', '=', 'tblpemesanan.destinasi_id')
+            ->join('tblpenjemputan', 'tblpenjemputan.id', '=', 'tblpemesanan.penjemputan_id')
+            ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
+            ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
+            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
+            ->where('status_bayar', 'Pending')->count();
+@endphp
 <div class="sticky">
     <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
     <div class="app-sidebar">
@@ -63,7 +72,7 @@
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pembayaran')}}"><i
-                            class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span></a>
+                            class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span><span class="badge bg-green br-5 side-badge blink-text pb-1">{{$pesanan}}</span></a>
                 </li>
                 {{-- <li>
                     <a class="side-menu__item has-link" href="#"><i
@@ -88,7 +97,7 @@
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pembayaran')}}"><i
-                            class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span></a>
+                            class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span><span class="badge bg-green br-5 side-badge blink-text pb-1">{{$pesanan}}</span></a>
                 </li>
                 @elseif(Auth::user()->role == 'Pengemudi')
                 <li>

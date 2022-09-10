@@ -33,7 +33,7 @@
                                 <th class="wd-15p border-bottom-0">Tanggal Perjalanan</th>
                                 <th class="wd-15p border-bottom-0">Total Harga</th>
                                 <th class="wd-15p border-bottom-0">Bukti Bayar</th>
-                                <th class="wd-15p border-bottom-0">Opsi</th>
+                                <th class="wd-15p border-bottom-0 text-center">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,7 +44,7 @@
                                 <td>{{$p->nama_kota}}, {{$p->kecamatan}} - {{$p->nama_destinasi}}</td>
                                 <td class="text-center">
                                     @if ($p->status_bayar == 'Pending')
-                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    <span class="badge bg-warning text-dark">Menunggu</span>
                                     @elseif ($p->status_bayar == 'Terkonfirmasi')
                                     <span class="badge bg-success">Selesai</span>
                                     @elseif ($p->status_bayar == 'Selesai')
@@ -96,7 +96,7 @@
                             </tr>
                             @empty
                             <tr class="text-center">
-                                <td colspan="5">Tidak ada data</td>
+                                <td colspan="9">Tidak ada data</td>
                             </tr>
                             @endforelse
                         </tbody>

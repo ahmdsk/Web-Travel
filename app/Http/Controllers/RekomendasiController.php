@@ -109,7 +109,7 @@ class RekomendasiController extends Controller
             }
 
             // panggil function untuk cek data pembilang, dan penyebut serta user yang ingin di cek (user login)
-            return $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
+            $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
 
             foreach($rekomendasi as $idpesanan => $rating){
                 $produkRekomendasi   = DB::table('destinasi')

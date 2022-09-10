@@ -5,7 +5,7 @@
     <form action="#" method="GET" id="formSearchTravel">
         <div class="row align-items-end">
             <div class="col-md-3">
-                <label for="">Pilih Kota</label>
+                <label for="">Pilih Kota Penjemputan</label>
                 <select class="form-select" name="kota" required>
                     <option selected disabled>Pilih Kota</option>
                     @forelse ($ibukota as $ib)
@@ -16,7 +16,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="">Pilih Kecamatan</label>
+                <label for="">Pilih Kecamatan Penjemputan</label>
                 <select class="form-select" name="kecamatan" required>
                     <option selected disabled>Pilih Kecamatan</option>
                     @forelse ($kecamatan as $k)
@@ -27,8 +27,16 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="">Destinasi</label>
-                <input type="text" class="form-control" name="destinasi" placeholder="Destinasi" required>
+                <label for="">Destinasi Tujuan</label>
+                {{-- <input type="text" class="form-control" name="destinasi" placeholder="Destinasi" required> --}}
+                <select class="form-select" name="destinasi" required>
+                    <option selected disabled>Pilih Destinasi</option>
+                    @forelse ($destinasi as $d)
+                    <option value="{{$d}}">{{$d}}</option>
+                    @empty
+                    <option>Tidak Ada Data</option>
+                    @endforelse
+                </select>
             </div>
             <div class="col-md-3 mt-2">
                 <button type="submit" class="btn btn-primary fw-bold" style="width: 100%">Cari</button>
@@ -36,6 +44,51 @@
         </div>
     </form>
 </div>
+@if (count($rekomendasi) > 0)
+    <div class="row">
+        @foreach ($rekomendasi as $rekomenMobil)
+        <div class="col-md-4">
+            <div class="card overflow-hidden">
+                @if ($rekomenMobil['foto_mobil'] != null)
+                <img src="{{ asset('foto_mobil/'.$rekomenMobil['foto_mobil']) }}" class="card-img-top" alt="img">
+                @else
+                <img src="{{ asset('assets/images/media/8.jpg') }}" class="card-img-top" alt="img">
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title">{{$rekomenMobil['nama_perusahaan']}}</h5>
+                    <table class="table table-borderless">
+                        <tbody>
+                          <tr>
+                            <td>Destinasi</td>
+                            <td>:</td>
+                            <td>{{$rekomenMobil['nama_destinasi']}}</td>
+                          </tr>
+                          <tr>
+                            <td>Harga Destinasi</td>
+                            <td>:</td>
+                            <td>Rp. {{number_format($rekomenMobil['harga_destinasi'], 0)}}</td>
+                          </tr>
+                          <tr>
+                            <td>Kursi Tersedia</td>
+                            <td>:</td>
+                            <td>{{$rekomenMobil['jumlah_kursi']}}</td>
+                          </tr>
+                          <tr>
+                            <td>Keterangan Mobil</td>
+                            <td>:</td>
+                            <td>{{$rekomenMobil['merk_mobil']}} ({{$rekomenMobil['warna_mobil']}})</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{route('penumpang.pesanTravel', $rekomenMobil['id'])}}" class="btn btn-success">Pesan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+@endif
 <div id="data-mobil">
     <div class="row">
         @forelse ($listMobil as $mobil)
