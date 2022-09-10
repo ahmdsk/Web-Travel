@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function() {
 
         // Cek Penjemputan
         Route::get('/cek-penjemputan', [CekPenjemputanController::class, 'index'])->name('pengemudi.penjemputan');
+        Route::get('/riwayat-penjemputan', [CekPenjemputanController::class, 'riwayatPenjemputan'])->name('pengemudi.riwayatpenjemputan');
 
 
         // Pesan Travel

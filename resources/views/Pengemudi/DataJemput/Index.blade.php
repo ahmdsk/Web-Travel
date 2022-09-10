@@ -25,6 +25,7 @@
                     <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
                         <thead>
                             <tr>
+                                <th class="wd-15p border-bottom-0">Status Penjemputan</th>
                                 <th class="wd-15p border-bottom-0">Tanggal Perjalanan</th>
                                 <th class="wd-15p border-bottom-0">Nama Penumpang</th>
                                 <th class="wd-15p border-bottom-0">Penjemputan - Destinasi</th>
@@ -35,6 +36,9 @@
                         <tbody>
                             @forelse ($pemesanan as $p)
                             <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="form-checkbox" name="status_jemput">
+                                </td>
                                 <td>{{$hari[date('N', strtotime($p->tgl_perjalanan))]}}, {{$p->tgl_perjalanan}}</td>
                                 <td>{{$p->nama}}</td>
                                 <td>{{$p->nama_kota}}, {{$p->kecamatan}} - {{$p->nama_destinasi}}</td>

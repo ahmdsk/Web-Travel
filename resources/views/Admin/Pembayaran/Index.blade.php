@@ -64,7 +64,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#konfirmasi-{{$p->id_pesanan}}">Konfirmasi Pembayaran</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#konfirmasi-{{$p->id_pesanan}}" {{$p->status_bayar == 'Terkonfirmasi' || $p->status_bayar == 'Selesai' ? 'disabled' : ''}}>Konfirmasi Pembayaran</button>
 
                                     <div class="modal fade" id="konfirmasi-{{$p->id_pesanan}}">
                                         <div class="modal-dialog" role="document">

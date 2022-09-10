@@ -108,6 +108,10 @@
                     <a class="side-menu__item has-link" href="{{route('pengemudi.penjemputan')}}"><i
                             class="side-menu__icon fe fe-map"></i><span class="side-menu__label">Cek Penjemputan</span></a>
                 </li>
+                <li>
+                    <a class="side-menu__item has-link" href="{{route('pengemudi.riwayatpenjemputan')}}"><i
+                            class="side-menu__icon fe fe-rotate-ccw"></i><span class="side-menu__label">Riwayat Penjemputan</span></a>
+                </li>
                 @elseif(Auth::user()->role == 'Penumpang')
                 <li>
                     <a class="side-menu__item has-link" href="{{route('penumpang.pesan')}}"><i
