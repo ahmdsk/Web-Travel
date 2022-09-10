@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class RekomendasiController extends Controller
+class DevRecommendedController extends Controller
 {
     public function similarityDistance($preferences, $person1, $person2)
     {

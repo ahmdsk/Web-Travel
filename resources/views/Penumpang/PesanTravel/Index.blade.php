@@ -108,6 +108,11 @@
                     <table class="table table-borderless">
                         <tbody>
                           <tr>
+                            <td>Nama Pengemudi</td>
+                            <td>:</td>
+                            <td>{{$mobil->nama}}</td>
+                          </tr>
+                          <tr>
                             <td>Destinasi</td>
                             <td>:</td>
                             <td>{{$mobil->nama_destinasi}}</td>
@@ -129,7 +134,22 @@
                           </tr>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-end">
+                    @php
+                        $jumlahRating = DB::table('tblrating')
+                                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                                    ->where('mobil_id', $mobil->id_mobil)->count();
+                        $dataRating = DB::table('tblrating')
+                                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                                    ->where('mobil_id', $mobil->id_mobil)->sum('rating');
+
+                        if($jumlahRating != 0 && $dataRating != 0){
+                            $rating = $dataRating / $jumlahRating;
+                        }else{
+                            $rating = 0;
+                        }
+                    @endphp
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h4>Rating: {{number_format($rating, 1)}}</h4>
                         <a href="{{route('penumpang.pesanTravel', $mobil->id)}}" class="btn btn-success">Pesan</a>
                     </div>
                 </div>

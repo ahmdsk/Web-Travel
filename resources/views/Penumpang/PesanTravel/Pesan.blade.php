@@ -10,24 +10,35 @@
         <div class="col-xl-8 col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Atur Destinasi Perjalanan Ke {{$mobil->nama_destinasi}}</h3>
+                    <div class="card-title" style="width: 100%">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Atur Destinasi Perjalanan Ke {{$mobil->nama_destinasi}}</h3>
+                            <h3 style="color: gold" class="fw-bold">Rating: {{number_format($rating, 1)}}</h3>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <h5 class="fw-bold">Informasi Kendaraan</h5>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Nama Pengemudi</label>
+                                <input type="text" class="form-control" name="merk_mobil" value="{{$mobil->nama}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Merk Mobil</label>
                                 <input type="text" class="form-control" name="merk_mobil" value="{{$mobil->merk_mobil}}" readonly>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Warna Mobil</label>
                                 <input type="text" class="form-control" name="warna_mobil" value="{{$mobil->warna_mobil}}" readonly>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">No Polisi</label>
                                 <input type="text" class="form-control" name="no_polisi" value="{{$mobil->no_polisi}}" readonly>

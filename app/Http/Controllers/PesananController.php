@@ -97,6 +97,8 @@ class PesananController extends Controller
                     ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
                     ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                     ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tblperusahaan.*', 'tbluser.nama')
                     ->orderBy('destinasi.id', 'desc')
                     ->get();
 
@@ -201,9 +203,23 @@ class PesananController extends Controller
                     ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
                     ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                     ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
                     ->where('destinasi.id', $id)
                     ->orderBy('destinasi.id', 'desc')
                     ->first();
+
+        $jumlahRating = DB::table('tblrating')
+                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                    ->where('mobil_id', $id)->count();
+        $dataRating = DB::table('tblrating')
+                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                    ->where('mobil_id', $id)->sum('rating');
+
+        if($jumlahRating != 0 && $dataRating != 0){
+            $data['rating'] = $dataRating / $jumlahRating;
+        }else{
+            $data['rating'] = 0;
+        }
 
         $data['cekKursi'] = DB::table('tblpemesanan')->where('mobil_id', $id)->whereIn('status_bayar', ['Pending', 'Terkonfirmasi'])->get();
                     
