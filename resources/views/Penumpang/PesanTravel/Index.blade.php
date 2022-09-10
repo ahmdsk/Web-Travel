@@ -45,6 +45,7 @@
     </form>
 </div>
 @if (count($rekomendasi) > 0)
+    <h3>Rekomendasi Untuk Kamu</h3>
     <div class="row">
         @foreach ($rekomendasi as $rekomenMobil)
         <div class="col-md-4">
@@ -55,7 +56,10 @@
                 <img src="{{ asset('assets/images/media/8.jpg') }}" class="card-img-top" alt="img">
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title">{{$rekomenMobil['nama_perusahaan']}}</h5>
+                    <div class="card-title">
+                        <span class="badge bg-danger badge-lg mb-3">Rekomendasi</span>
+                        <h5>{{$rekomenMobil['nama_perusahaan']}}</h5>
+                    </div>
                     <table class="table table-borderless">
                         <tbody>
                           <tr>

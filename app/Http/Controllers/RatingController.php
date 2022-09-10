@@ -21,6 +21,10 @@ class RatingController extends Controller
     }
 
     public function ratingPost(Request $request, $id){
+        if($request->rating == null){
+            return back()->with('warning', 'Gagal Member Rating');
+        }
+
         $beriRating = DB::table('tblrating')->insert([
             'rating'        => $request->rating,
             'keterangan'    => $request->keterangan,

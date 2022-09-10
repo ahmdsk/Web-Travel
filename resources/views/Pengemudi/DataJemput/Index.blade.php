@@ -30,7 +30,7 @@
                                 <th class="wd-15p border-bottom-0">Nama Penumpang</th>
                                 <th class="wd-15p border-bottom-0">Penjemputan - Destinasi</th>
                                 <th class="wd-15p border-bottom-0">Keterangan Mobil</th>
-                                <th class="wd-15p border-bottom-0">Alamat</th>
+                                <th class="wd-15p border-bottom-0 text-center">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>

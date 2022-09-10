@@ -61,7 +61,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if ($p->status_bayar == 'Pending')
-                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    <span class="badge bg-warning text-dark">Menunggu</span>
                                     @elseif ($p->status_bayar == 'Terkonfirmasi')
                                     <span class="badge bg-success">Terkonfirmasi</span>
                                     @elseif ($p->status_bayar == 'Selesai')
@@ -90,8 +90,18 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="mb-3">
+                                                                <div class="mb-3">
+                                                                    <h5>Keterangan Rating: </h5>
+                                                                    <ul>
+                                                                        <li>5 (Sangat Puas)</li>
+                                                                        <li>4 (Puas)</li>
+                                                                        <li>3 (Cukup Puas)</li>
+                                                                        <li>2 (Tidak Puas)</li>
+                                                                        <li>1 (Sangat Tidak Puas)</li>
+                                                                    </ul>
+                                                                </div>
                                                                 <label for="rating" class="col-form-label">Rating / Ulasan</label>
-                                                                <input class="form-control" type="number" name="rating" id="rating" min="1" max="5" placeholder="1-5">
+                                                                <input class="form-control" type="number" name="rating" id="rating" min="1" max="5" placeholder="Beri Nilai Rating Anda Disini!">
                                                             </div>
                                                         </div>
                                                     </div>

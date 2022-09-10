@@ -10,6 +10,7 @@ class RekomendasiController extends Controller
 {
     public function similarityDistance($preferences, $person1, $person2)
     {
+        // dd($preferences[$person1], $preferences[$person2]);
         $similar = array();
         $sum = 0;
 
@@ -55,7 +56,6 @@ class RekomendasiController extends Controller
                             $total[$key] = 0;
                         }
                         $total[$key] += $preferences[$otherPerson][$key] * $sim;
-
                         if (!array_key_exists($key, $simSums)) {
                             $simSums[$key] = 0;
                         }
@@ -69,7 +69,7 @@ class RekomendasiController extends Controller
             $ranks[$key] = $value / $simSums[$key];
         }
 
-        array_multisort($ranks, SORT_DESC);
+        // array_multisort($ranks, SORT_DESC);
         return $ranks;
     }
 
@@ -104,26 +104,29 @@ class RekomendasiController extends Controller
                     // $psn->id_pesanan = id pesanan yang telah dipesan oleh semua user
                     // $rating = dapat dari rating yang telah semua user berikan
 
-                    $dataRekomendasi[$u->id][$psn->id_pesanan] = $rating;
+                    $dataRekomendasi[$u->id][$psn->destinasi_id] = $rating;
                 }   
             }
 
             // panggil function untuk cek data pembilang, dan penyebut serta user yang ingin di cek (user login)
             $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
 
-            foreach($rekomendasi as $idpesanan => $rating){
+            foreach($rekomendasi as $id_destinasi => $rating){
                 $produkRekomendasi   = DB::table('destinasi')
                             ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
                             ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                             ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
-                            ->join('tblpemesanan', 'tblpemesanan.destinasi_id', '=', 'destinasi.id')
-                            ->where('id_pesanan', $idpesanan)
+                            // ->join('tblpemesanan', 'tblpemesanan.destinasi_id', '=', 'destinasi.id')
+                            ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tblperusahaan.*')
+                            // ->select('id_mobil', 'foto_mobil', 'nama_destinasi', 'harga_destinasi', 'jumlah_kursi', 'merk_mobil', 'warna_mobil', 'id_pesanan')
+                            // ->groupBy('id_mobil', 'foto_mobil', 'nama_destinasi', 'harga_destinasi', 'jumlah_kursi', 'merk_mobil', 'warna_mobil', 'id_pesanan')
+                            ->where('destinasi.id', $id_destinasi)
                             ->get();
 
                 foreach($produkRekomendasi as $pr){
-                    $dataRating = DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating');
-                
-                    if(count($dataRating) > 0){
+                    // $dataRating = DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating');
+
+                    // if(count($dataRating) > 0){
                         array_push($data['rekomendasi'], [
                             'id_mobil'          => $pr->id_mobil,
                             'foto_mobil'        => $pr->foto_mobil,
@@ -132,29 +135,33 @@ class RekomendasiController extends Controller
                             'jumlah_kursi'      => $pr->jumlah_kursi,
                             'merk_mobil'        => $pr->merk_mobil,
                             'warna_mobil'       => $pr->warna_mobil,
-                            'jumlah_rating' => [
-                                'rating'    => array_sum(DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating')->toArray()) / DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->count()
-                            ]
+                            'nama_perusahaan'   => $pr->nama_perusahaan
+                            // 'jumlah_rating' => [
+                            //     'rating'    => array_sum(DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating')->toArray()) / DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->count()
+                            // ]
                         ]);
-                    }else{
-                        array_push($data['rekomendasi'], [
-                            'id_mobil'          => $pr->id_mobil,
-                            'foto_mobil'        => $pr->foto_mobil,
-                            'nama_destinasi'    => $pr->nama_destinasi,
-                            'harga_destinasi'   => $pr->harga_destinasi,
-                            'jumlah_kursi'      => $pr->jumlah_kursi,
-                            'merk_mobil'        => $pr->merk_mobil,
-                            'warna_mobil'       => $pr->warna_mobil,
-                            'jumlah_rating' => [
-                                'rating'    => 0,
-                            ]
-                        ]);
-                    }
+                    // }else{
+                    //     array_push($data['rekomendasi'], [
+                    //         'id_mobil'          => $pr->id_mobil,
+                    //         'foto_mobil'        => $pr->foto_mobil,
+                    //         'nama_destinasi'    => $pr->nama_destinasi,
+                    //         'harga_destinasi'   => $pr->harga_destinasi,
+                    //         'jumlah_kursi'      => $pr->jumlah_kursi,
+                    //         'merk_mobil'        => $pr->merk_mobil,
+                    //         'warna_mobil'       => $pr->warna_mobil,
+                            // 'nama_perusahaan'   => $pr->nama_perusahaan
+                    //         // 'jumlah_rating' => [
+                    //         //     'rating'    => 0,
+                    //         // ]
+                    //     ]);
+                    // }
                 }
             }
         }else{
             $rekomendasi = [];
         }
         // end data collaborative filtering
+
+        dd($data['rekomendasi']);
     }
 }

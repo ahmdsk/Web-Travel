@@ -182,7 +182,7 @@
             })
         });
 
-        $('#selectKecamatan').change(function(){
+        $('#selectKecamatan').click(function(){
             $.ajax({
                 type: 'GET',
                 url: "{{route('penumpang.cekharga')}}",

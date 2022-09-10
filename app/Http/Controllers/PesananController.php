@@ -69,7 +69,6 @@ class PesananController extends Controller
             $ranks[$key] = $value / $simSums[$key];
         }
 
-        array_multisort($ranks, SORT_DESC);
         return $ranks;
     }
 
@@ -127,55 +126,36 @@ class PesananController extends Controller
                             ->select('rating')->pluck('rating')->first();
     
                     // $u->id = id user dari semua user yang telah memesan travel
-                    // $psn->id_pesanan = id pesanan yang telah dipesan oleh semua user
+                    // $psn->destinasi_id = destinasi yang telah dipesan oleh semua user
                     // $rating = dapat dari rating yang telah semua user berikan
 
-                    $dataRekomendasi[$u->id][$psn->id_pesanan] = $rating;
+                    $dataRekomendasi[$u->id][$psn->destinasi_id] = $rating;
                 }   
             }
 
             // panggil function untuk cek data pembilang, dan penyebut serta user yang ingin di cek (user login)
-            return $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
+            $rekomendasi = $this->getRecommendations($dataRekomendasi, $userLogin->id);
 
-            foreach($rekomendasi as $idpesanan => $rating){
+            foreach($rekomendasi as $id_destinasi => $rating){
                 $produkRekomendasi   = DB::table('destinasi')
                             ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
                             ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                             ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
-                            ->join('tblpemesanan', 'tblpemesanan.destinasi_id', '=', 'destinasi.id')
-                            ->where('id_pesanan', $idpesanan)
+                            ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tblperusahaan.*')
+                            ->where('destinasi.id', $id_destinasi)
                             ->get();
 
                 foreach($produkRekomendasi as $pr){
-                    $dataRating = DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating');
-                
-                    if(count($dataRating) > 0){
-                        array_push($data['rekomendasi'], [
-                            'id_mobil'          => $pr->id_mobil,
-                            'foto_mobil'        => $pr->foto_mobil,
-                            'nama_destinasi'    => $pr->nama_destinasi,
-                            'harga_destinasi'   => $pr->harga_destinasi,
-                            'jumlah_kursi'      => $pr->jumlah_kursi,
-                            'merk_mobil'        => $pr->merk_mobil,
-                            'warna_mobil'       => $pr->warna_mobil,
-                            'jumlah_rating' => [
-                                'rating'    => array_sum(DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->pluck('rating')->toArray()) / DB::table('tblrating')->where('id_pesanan', $pr->id_pesanan)->count()
-                            ]
-                        ]);
-                    }else{
-                        array_push($data['rekomendasi'], [
-                            'id_mobil'          => $pr->id_mobil,
-                            'foto_mobil'        => $pr->foto_mobil,
-                            'nama_destinasi'    => $pr->nama_destinasi,
-                            'harga_destinasi'   => $pr->harga_destinasi,
-                            'jumlah_kursi'      => $pr->jumlah_kursi,
-                            'merk_mobil'        => $pr->merk_mobil,
-                            'warna_mobil'       => $pr->warna_mobil,
-                            'jumlah_rating' => [
-                                'rating'    => 0,
-                            ]
-                        ]);
-                    }
+                    array_push($data['rekomendasi'], [
+                        'id'                => $pr->id_mobil,
+                        'foto_mobil'        => $pr->foto_mobil,
+                        'nama_destinasi'    => $pr->nama_destinasi,
+                        'harga_destinasi'   => $pr->harga_destinasi,
+                        'jumlah_kursi'      => $pr->jumlah_kursi,
+                        'merk_mobil'        => $pr->merk_mobil,
+                        'warna_mobil'       => $pr->warna_mobil,
+                        'nama_perusahaan'   => $pr->nama_perusahaan
+                    ]);
                 }
             }
         }else{
@@ -208,6 +188,7 @@ class PesananController extends Controller
                 ->leftjoin('tblrating', 'tblrating.id_pesanan', '=', 'tblpemesanan.id_pesanan')
                 ->select('tblpemesanan.*', 'destinasi.*', 'tblpenjemputan.*', 'tbluser.*', 'tblmobil.*', 'tblrating.rating')
                 ->where('user_id', Auth::user()->id)
+                ->orderBy('tblpemesanan.id_pesanan', 'desc')
                 ->get();
 
         return view('Penumpang.DataPesanan.Index', $data);
@@ -242,6 +223,7 @@ class PesananController extends Controller
         $cekKursi = DB::table('tblpemesanan')
                 ->where('mobil_id', $request->id_mobil)
                 ->where('no_kursi', $request->no_kursi)
+                ->whereIn('status_bayar', ['Pending', 'Terkonfirmasi'])
                 ->get();
 
         if(count($cekKursi) < 1){
