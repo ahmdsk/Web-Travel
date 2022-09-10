@@ -20,6 +20,7 @@
                                 <th class="wd-15p border-bottom-0">NIK</th>
                                 <th class="wd-20p border-bottom-0">Tanggal Lahir</th>
                                 <th class="wd-15p border-bottom-0">Hak Akses</th>
+                                <th class="wd-15p border-bottom-0">Status</th>
                                 <th class="wd-25p border-bottom-0">Foto Pengguna</th>
                                 <th class="wd-25p border-bottom-0">Opsi</th>
                             </tr>
@@ -31,6 +32,13 @@
                                 <td>{{$p->nik}}</td>
                                 <td>{{$p->tgl_lahir}}</td>
                                 <td>{{$p->role}}</td>
+                                <td>
+                                    @if ($p->status_aktif == 1)
+                                        Aktif
+                                    @else
+                                        Non-Aktif
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($p->foto != null)
                                     <a href="{{asset('foto/'.$p->foto)}}" target="_blank"><img
@@ -52,7 +60,14 @@
                                             <li><a href="javascript:void(0)" data-bs-toggle="modal"
                                                     data-bs-target="#edit-modal-{{$p->id}}">Edit</a></li>
                                             <li><a href="javascript:void(0)"
-                                                    onclick="hapusModal('{{$p->id}}')">Hapus</a></li>
+                                                    onclick="hapusModal('{{$p->id}}')">
+                                                    @if ($p->status_aktif == 1)
+                                                        Non Aktifkan
+                                                    @else
+                                                        Aktifkan
+                                                    @endif
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -348,8 +363,8 @@
     function hapusModal(id){
         Swal.fire({
             icon: 'question',
-            title: 'Hapus Data?',
-            text: 'Yakin ingin hapus data ini?',
+            title: 'Ubah Status?',
+            text: 'Yakin ingin ubah status pengguna ini?',
             showCancelButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
@@ -358,13 +373,13 @@
                     url: "{{url('/data-pengguna/hapus')}}"+"/"+id,
                     success: function(json){
                         if(json.status == 200){
-                            Swal.fire('Berhasil Hapus Data!', '', 'success');
+                            Swal.fire('Berhasil Ubah Status!', '', 'success');
                             location.reload();
                         }
                     },
                     error: function(err){
                         if(json.status == 500){
-                            Swal.fire('Gagal Hapus Data!', '', 'warning');
+                            Swal.fire('Gagal Ubah Status!', '', 'warning');
                             location.reload();
                         }
                     }

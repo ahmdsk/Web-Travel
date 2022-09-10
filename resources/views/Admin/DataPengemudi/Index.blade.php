@@ -46,7 +46,7 @@
                                             </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="#" data-bs-toggle="modal" data-bs-target="#edit-modal-{{$p->id}}">Edit</a></li>
-                                            <li><a href="#" onclick="hapusModal('{{$p->id}}')">Hapus</a></li>
+                                            {{-- <li><a href="#" onclick="hapusModal('{{$p->id}}')">Hapus</a></li> --}}
                                         </ul>
                                     </div>
 

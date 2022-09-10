@@ -100,22 +100,30 @@ class DataPenggunaContoller extends Controller
 
     public function hapusPengguna($id){
         $user = DB::table('tbluser')->where('id', $id)->first();
+        
+        // if($user->role == 'Pengemudi'){
+        //     $cariPengemudi = DB::table('tbldriver')->where('user_id', $user->id)->first();
+        //     if($cariPengemudi != null){
+        //         // hapus pengemudi
+        //         $hapusUser = DB::table('tbldriver')->where('user_id', $user->id)->delete();
+        //     }
+        // }elseif($user->role == 'Agent'){
+        //     $cariAgent = DB::table('tblagent')->where('user_id', $user->id)->first();
+        //     if($cariAgent != null){
+        //         // hapus agent
+        //         $hapusUser = DB::table('tblagent')->where('user_id', $user->id)->delete();
+        //     }
+        // }
 
-        if($user->role == 'Pengemudi'){
-            $cariPengemudi = DB::table('tbldriver')->where('user_id', $user->id)->first();
-            if($cariPengemudi != null){
-                // hapus pengemudi
-                $hapusUser = DB::table('tbldriver')->where('user_id', $user->id)->delete();
-            }
-        }elseif($user->role == 'Agent'){
-            $cariAgent = DB::table('tblagent')->where('user_id', $user->id)->first();
-            if($cariAgent != null){
-                // hapus agent
-                $hapusUser = DB::table('tblagent')->where('user_id', $user->id)->delete();
-            }
+        if($user->status_aktif == 1){
+            $hapusUser = DB::table('tbluser')->where('id', $id)->update([
+                'status_aktif' => 0
+            ]);
+        }else{
+            $hapusUser = DB::table('tbluser')->where('id', $id)->update([
+                'status_aktif' => 1
+            ]);
         }
-
-        $hapusUser = DB::table('tbluser')->where('id', $id)->delete();
 
         if($hapusUser){
             return response()->json([

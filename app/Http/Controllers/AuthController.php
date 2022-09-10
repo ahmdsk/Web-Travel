@@ -18,15 +18,24 @@ class AuthController extends Controller
             'password'  => 'required',
         ]);
 
-        if($validasi){
-            $auth = Auth::attempt($validasi);
+        $cekuser = DB::table('tbluser')
+            ->where('username', $request->username)
+            ->first();
 
-            if($auth){
-                return redirect(route('dashboard'))->with('success', 'Berhasil Login');
-            }else{
-                return back()->with('warning', 'Username / Password Salah!');
+        if($cekuser->status_aktif == 1){
+            if($validasi){
+                $auth = Auth::attempt($validasi);
+    
+                if($auth){
+                    return redirect(route('dashboard'))->with('success', 'Berhasil Login');
+                }else{
+                    return back()->with('warning', 'Username / Password Salah!');
+                }
             }
+        }else{
+            return back()->with('warning', 'Maaf Pengguna Atas Nama '.$cekuser->nama.' Telah Di Non-Aktifkan!');
         }
+
     }
 
     public function register(){

@@ -16,7 +16,8 @@ class DataMobilContoller extends Controller
                         ->get();
 
         $data['driver'] = DB::table('tbldriver')
-                        ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')->get();
+                        ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                        ->where('status_aktif', 1)->get();
 
         $data['perusahaan'] = DB::table('tblperusahaan')->get();
 
