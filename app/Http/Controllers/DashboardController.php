@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index(){
         $data['title'] = 'Dashboard';
 
-        if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Agent'){
+        if(Auth::user()->role == 'Admin'){
 
             $data['jumlahPendapatan'] = DB::table('tblpemesanan')
                     ->where('status_bayar', 'Selesai')
@@ -20,6 +20,37 @@ class DashboardController extends Controller
             $data['jumlahAgent']     = DB::table('tbluser')->where('role', 'Agent')->count();
             $data['jumlahPengemudi'] = DB::table('tbluser')->where('role', 'Pengemudi')->count();
             $data['jumlahPenumpang'] = DB::table('tbluser')->where('role', 'Penumpang')->count();
+
+        }elseif(Auth::user()->role == 'Agent'){
+
+            $cekPerusahaanAgent = DB::table('tbluser')
+                            ->join('tblagent', 'tblagent.user_id', '=', 'tbluser.id')
+                            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblagent.perusahaan_id')
+                            ->where('id', Auth::user()->id)->first();
+
+            $data['jumlahPendapatan'] = DB::table('tblpemesanan')
+                    ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
+                    ->where('perusahaan_id', $cekPerusahaanAgent->id_perusahaan)
+                    ->where('status_bayar', 'Selesai')
+                    ->sum('total_harga');
+
+            $data['jumlahAgent']     = DB::table('tbluser')
+                            ->join('tblagent', 'tblagent.user_id', '=', 'tbluser.id')
+                            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblagent.perusahaan_id')
+                            ->select('tbluser.*', 'tblperusahaan.*')
+                            ->where('id_perusahaan', $cekPerusahaanAgent->id_perusahaan)
+                            ->where('role', '=', 'Agent')
+                            ->count();
+
+            $data['jumlahPengemudi'] = DB::table('tbluser')
+                            ->join('tbldriver', 'tbldriver.user_id', '=', 'tbluser.id')
+                            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                            ->select('tbluser.*', 'tblperusahaan.*')
+                            ->where('id_perusahaan', $cekPerusahaanAgent->id_perusahaan)
+                            ->where('role', '=', 'Pengemudi')
+                            ->count();
+            
+            $data['jumlahPenumpang'] = DB::table('tbluser')->where('role', '=', 'Penumpang')->count();
 
         }elseif(Auth::user()->role == 'Pengemudi'){
 

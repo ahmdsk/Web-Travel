@@ -3,18 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DataPengemudiContoller extends Controller
 {
     public function index(){
         $data['title']      = 'Data Pengemudi';
-        $data['pengemudi']  = DB::table('tbluser')
-                        ->join('tbldriver', 'tbldriver.user_id', '=', 'tbluser.id')
-                        ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
-                        ->select('tbluser.*', 'tblperusahaan.*')
-                        ->where('role', '=', 'Pengemudi')
-                        ->get();
+
+        if(Auth::user()->role == 'Agent'){
+            $cekPerusahaanAgent = DB::table('tbluser')
+                ->join('tblagent', 'tblagent.user_id', '=', 'tbluser.id')
+                ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblagent.perusahaan_id')
+                ->where('id', Auth::user()->id)->first();
+
+            $data['pengemudi']  = DB::table('tbluser')
+                    ->join('tbldriver', 'tbldriver.user_id', '=', 'tbluser.id')
+                    ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                    ->select('tbluser.*', 'tblperusahaan.*')
+                    ->where('id_perusahaan', $cekPerusahaanAgent->id_perusahaan)
+                    ->where('role', '=', 'Pengemudi')
+                    ->get();
+        }else{
+            $data['pengemudi']  = DB::table('tbluser')
+                    ->join('tbldriver', 'tbldriver.user_id', '=', 'tbluser.id')
+                    ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                    ->select('tbluser.*', 'tblperusahaan.*')
+                    ->where('role', '=', 'Pengemudi')
+                    ->get();
+        }
+
         $data['perusahaan'] = DB::table('tblperusahaan')->get();
 
         return view('Admin.DataPengemudi.Index', $data);
@@ -39,6 +57,7 @@ class DataPengemudiContoller extends Controller
                 'url_alamat'    => $request->link_alamat,
                 'role'          => 'Pengemudi',
                 'password'      => bcrypt('12345678'),
+                'status_aktif'  => 1,
                 'foto'          => $fotoBaru
             ]);
 

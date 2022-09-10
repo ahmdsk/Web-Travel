@@ -44,6 +44,7 @@ class DataPenggunaContoller extends Controller
                 'agama'         => $request->agama,
                 'alamat'        => $request->alamat,
                 'url_alamat'    => $request->link_alamat,
+                'status_aktif'  => 1,
                 'foto'          => $fotoBaru,
             ]);
         }else{
@@ -60,6 +61,7 @@ class DataPenggunaContoller extends Controller
                 'agama'         => $request->agama,
                 'alamat'        => $request->alamat,
                 'url_alamat'    => $request->link_alamat,
+                'status_aktif'  => 1,
             ]);
         }
 

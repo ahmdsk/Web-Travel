@@ -39,6 +39,7 @@ class DataAgentController extends Controller
                 'url_alamat'    => $request->link_alamat,
                 'role'          => 'Agent',
                 'password'      => bcrypt('12345678'),
+                'status_aktif'  => 1,
                 'foto'          => $fotoBaru
             ]);
         }else{
@@ -55,6 +56,7 @@ class DataAgentController extends Controller
                 'url_alamat'    => $request->link_alamat,
                 'role'          => 'Agent',
                 'password'      => bcrypt('12345678'),
+                'status_aktif'  => 1,
             ]);
         }
 
