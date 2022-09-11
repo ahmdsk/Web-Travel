@@ -94,6 +94,63 @@
 
     </div>
 
+    <div class="modal fade" id="ubahPass">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Tambah Data Pengguna</h6>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="{{route('pengguna.ubahpass')}}" method="post">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Silahkan Masukan Password Lama</label>
+                                <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                                    <a href="javascript:void(0)"
+                                        class="input-group-text bg-white text-muted">
+                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                    </a>
+                                    <input class="input100 border-start-0 form-control ms-0" name="password_lama" type="password"
+                                        placeholder="Password Lama">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="">Silahkan Masukan Password Baru</label>
+                                <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
+                                    <a href="javascript:void(0)"
+                                        class="input-group-text bg-white text-muted">
+                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                    </a>
+                                    <input class="input100 border-start-0 form-control ms-0" name="password_baru" type="password"
+                                        placeholder="Password Baru">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="">Silahkan Masukan Konfirmasi Password Baru</label>
+                                <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
+                                    <a href="javascript:void(0)"
+                                        class="input-group-text bg-white text-muted">
+                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                    </a>
+                                    <input class="input100 border-start-0 form-control ms-0" name="konfirmasi_password_baru" type="password"
+                                        placeholder="Konfirmasi Password Baru">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-success" type="submit">Ubah Password</button>
+                        <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- BACK-TO-TOP -->
     <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
 
@@ -182,6 +239,9 @@
 
     <!-- CUSTOM JS -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+    <!-- SHOW PASSWORD JS -->
+    <script src="{{ asset('assets/js/show-password.min.js') }}"></script>
 
     @stack('inc-js')
 

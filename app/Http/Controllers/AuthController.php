@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -176,5 +177,75 @@ class AuthController extends Controller
     public function logout(){
         Auth::logout();
         return redirect(route('login'))->with('success', 'Berhasil Logout!');
+    }
+
+    public function ubahProfile(){
+        $data['title']      = 'Ubah Profile';
+        $data['profile']    = DB::table('tbluser')->where('id', Auth::user()->id)->first();
+
+        return view('Auth.ubahprofile', $data);
+    }
+
+    public function ubahProfilePost(Request $request){
+        // cek jika ada foto
+        $foto= $request->foto;
+        if($foto != null){
+            $fotoBaru = rand().'.'.$foto->getClientOriginalExtension();
+            $foto->move(public_path('foto/'), $fotoBaru);
+            
+            $ubahDataUser = DB::table('tbluser')->where('id', Auth::user()->id)->update([
+                'nama'          => $request->nama,
+                'email'         => $request->email,
+                'no_telp'       => $request->no_telp,
+                'tgl_lahir'     => $request->tgl_lahir,
+                'umur'          => $request->umur,
+                'nik'           => $request->nik,
+                'agama'         => $request->agama,
+                'alamat'        => $request->alamat,
+                'foto'          => $fotoBaru,
+            ]);
+        }else{
+            $ubahDataUser = DB::table('tbluser')->where('id', Auth::user()->id)->update([
+                'nama'          => $request->nama,
+                'email'         => $request->email,
+                'no_telp'       => $request->no_telp,
+                'tgl_lahir'     => $request->tgl_lahir,
+                'umur'          => $request->umur,
+                'nik'           => $request->nik,
+                'agama'         => $request->agama,
+                'alamat'        => $request->alamat,
+            ]);
+        }
+
+        if($ubahDataUser){
+            return back()->with('success', 'Berhasil Update Profile!');
+        }else{
+            return back()->with('success', 'Gagal Update Profile!');
+        }
+    }
+
+    public function ubahPassword(Request $request){
+        if(Hash::check($request->password_lama, Auth::user()->password)){
+            if($request->password_baru != null && $request->konfirmasi_password_baru != null){
+                if($request->password_baru == $request->konfirmasi_password_baru){
+                    $ubahPassword = DB::table('tbluser')
+                        ->where('id', Auth::user()->id)->update([
+                            'password' => bcrypt($request->password_baru)
+                        ]);
+                    
+                    if($ubahPassword){
+                        return back()->with('success', 'Password Berhasil Diubah!');
+                    }else{
+                        return back()->with('warning', 'Gagal Ubah Password!');
+                    }
+                }else{
+                    return back()->with('warning', 'Maaf Konfirmasi Password Baru Tidak Sama!');
+                }
+            }else{
+                return back()->with('warning', 'Silahkan Isi Password / Konfirmasi Password Baru!');
+            }
+        }else{
+            return back()->with('warning', 'Maaf Password Lama Salah!');
+        }
     }
 }

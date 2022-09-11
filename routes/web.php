@@ -50,6 +50,13 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Ubah Profile
+    Route::get('/ubah-profile', [AuthController::class, 'ubahProfile'])->name('pengguna.ubahprofile');
+    Route::post('/ubah-profile', [AuthController::class, 'ubahProfilePost']);
+
+    // Ubah Password
+    Route::post('/ubah-password', [AuthController::class, 'ubahPassword'])->name('pengguna.ubahpass');
+
     // Middleware Admin
     // Route::middleware('admin')->group(function() {
         // Data Agent Travel
