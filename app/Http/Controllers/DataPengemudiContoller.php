@@ -24,6 +24,9 @@ class DataPengemudiContoller extends Controller
                     ->where('id_perusahaan', $cekPerusahaanAgent->id_perusahaan)
                     ->where('role', '=', 'Pengemudi')
                     ->get();
+
+            $data['perusahaan'] = DB::table('tblperusahaan')
+                    ->where('id_perusahaan', $cekPerusahaanAgent->id_perusahaan)->get();
         }else{
             $data['pengemudi']  = DB::table('tbluser')
                     ->join('tbldriver', 'tbldriver.user_id', '=', 'tbluser.id')
@@ -31,9 +34,9 @@ class DataPengemudiContoller extends Controller
                     ->select('tbluser.*', 'tblperusahaan.*')
                     ->where('role', '=', 'Pengemudi')
                     ->get();
-        }
 
-        $data['perusahaan'] = DB::table('tblperusahaan')->get();
+            $data['perusahaan'] = DB::table('tblperusahaan')->get();
+        }
 
         return view('Admin.DataPengemudi.Index', $data);
     }

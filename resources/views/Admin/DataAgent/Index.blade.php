@@ -215,13 +215,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="username" class="col-form-label">Username (Tidak boleh ada spasi)</label>
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input type="text" class="form-control" id="username" name="username" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="nama_lengkap" class="col-form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap">
+                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" required>
                             </div>
                         </div>
                     </div>
@@ -229,13 +229,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="email" class="col-form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="no_telp" class="col-form-label">No Telpon</label>
-                                <input type="text" class="form-control" id="no_telp" name="no_telp">
+                                <input type="text" class="form-control" id="no_telp" name="no_telp" required>
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                         <div class="col-md-12">
                             <div class="mb-3">
                                 <label for="nik" class="col-form-label">NIK</label>
-                                <input type="text" class="form-control" id="nik" name="nik">
+                                <input type="text" class="form-control" id="nik" name="nik" required>
                             </div>
                         </div>
                     </div>
@@ -251,13 +251,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="tgl_lahir" class="col-form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
+                                <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="umur" class="col-form-label">Umur</label>
-                                <input type="number" class="form-control" id="umur" name="umur">
+                                <input type="number" class="form-control" id="umur" name="umur" required>
                             </div>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="agama" class="col-form-label">Agama</label>
-                                <select class="form-select" name="agama">
+                                <select class="form-select" name="agama" required>
                                     <option selected disabled>Pilih Agama</option>
                                     <option value="Islam">Islam</option>
                                     <option value="Protestan">Protestan</option>
@@ -287,7 +287,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="alamat" class="col-form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat">
+                                <input type="text" class="form-control" id="alamat" name="alamat" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -301,7 +301,7 @@
                         <div class="col-md-12">
                             <div class="mb-3">
                                 <label for="perusahaan" class="col-form-label">Pilih Perusahaan</label>
-                                <select class="form-select" name="perusahaan" id="perusahaan">
+                                <select class="form-select" name="perusahaan" id="perusahaan" required>
                                     <option selected disabled>Pilih Perusahaan</option>
                                     @forelse ($perusahaan as $p)
                                     <option value="{{$p->id_perusahaan}}">{{$p->nama_perusahaan}}</option>
