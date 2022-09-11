@@ -22,6 +22,12 @@ class DataAgentController extends Controller
 
     public function tambahAgent(Request $request){
         $foto = $request->foto;
+
+        $cekUserName = DB::table('tbluser')->where('username', $request->username)->count();
+        if($cekUserName > 0){
+            return back()->with('warning', 'Maaf Username '.$request->username.' Telah Digunakan!');
+        }
+
         if($foto != null){
             $fotoBaru = rand().'.'.$foto->getClientOriginalExtension();
             $foto->move(public_path('foto/'), $fotoBaru);

@@ -25,6 +25,12 @@ class DataPenggunaContoller extends Controller
             return back()->with('error', 'Silahkan Pilih Role Akses!');
         }
 
+        $cekUserName = DB::table('tbluser')->where('username', $request->username)->count();
+
+        if($cekUserName > 0){
+            return back()->with('warning', 'Maaf Username '.$request->username.' Telah Digunakan!');
+        }
+
         // cek jika ada foto
         $foto= $request->foto;
         if($foto != null){
