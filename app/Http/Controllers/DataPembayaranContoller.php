@@ -10,13 +10,29 @@ class DataPembayaranContoller extends Controller
 {
     public function index(){
         $data['title']  = 'Konfirmasi Pembayaran';
-        $data['pemesanan']  = DB::table('tblpemesanan')
-            ->join('destinasi', 'destinasi.id', '=', 'tblpemesanan.destinasi_id')
-            ->join('tblpenjemputan', 'tblpenjemputan.id', '=', 'tblpemesanan.penjemputan_id')
-            ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
-            ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
-            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
-            ->orderBy('id_pesanan', 'desc')->get();
+        
+        if(Auth::user()->role == 'Agent'){
+            $cekPerusahaan = DB::table('tblperusahaan')
+                ->join('tblagent', 'tblagent.perusahaan_id', '=', 'tblperusahaan.id_perusahaan')
+                ->where('user_id', Auth::user()->id)->first();
+
+            $data['pemesanan']  = DB::table('tblpemesanan')
+                ->join('destinasi', 'destinasi.id', '=', 'tblpemesanan.destinasi_id')
+                ->join('tblpenjemputan', 'tblpenjemputan.id', '=', 'tblpemesanan.penjemputan_id')
+                ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
+                ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
+                ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
+                ->where('tblperusahaan.id_perusahaan', $cekPerusahaan->id_perusahaan)
+                ->orderBy('id_pesanan', 'desc')->get();
+        }else{
+            $data['pemesanan']  = DB::table('tblpemesanan')
+                ->join('destinasi', 'destinasi.id', '=', 'tblpemesanan.destinasi_id')
+                ->join('tblpenjemputan', 'tblpenjemputan.id', '=', 'tblpemesanan.penjemputan_id')
+                ->join('tbluser', 'tbluser.id', '=', 'tblpemesanan.user_id')
+                ->join('tblmobil', 'tblmobil.id_mobil', '=', 'tblpemesanan.mobil_id')
+                ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tblmobil.perusahaan_id')
+                ->orderBy('id_pesanan', 'desc')->get();
+        }
 
         return view('Admin.Pembayaran.Index', $data);
     }

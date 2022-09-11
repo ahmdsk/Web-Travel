@@ -133,6 +133,7 @@ Route::middleware('auth')->group(function() {
         // Pesan Travel
         Route::get('/pesan/kecamatan', [PesananController::class, 'ambilKecamatan'])->name('penumpang.kecamatan');
         Route::get('/pesan/harga-jemput', [PesananController::class, 'ambilHargaJemput'])->name('penumpang.cekharga');
+        Route::get('/pesan/waktu-jemput', [PesananController::class, 'waktujemput'])->name('penumpang.waktujemput');
 
         Route::get('/pesan', [PesananController::class, 'pesan'])->name('penumpang.pesan');
         Route::get('/pesan/cari', [PesananController::class, 'cari'])->name('penumpang.cari');

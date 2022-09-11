@@ -43,6 +43,10 @@
                             class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Data Pengguna</span></a>
                 </li>
                 <li>
+                    <a class="side-menu__item has-link" href="{{route('perusahaan')}}"><i
+                            class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Data Perusahaan</span></a>
+                </li>
+                <li>
                     <a class="side-menu__item has-link" href="{{route('agent')}}"><i
                             class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Data Agen Travel</span></a>
                 </li>
@@ -51,24 +55,20 @@
                             class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Data Pengemudi</span></a>
                 </li>
                 <li>
+                    <a class="side-menu__item has-link" href="{{route('mobil')}}"><i
+                            class="side-menu__icon fe fe-life-buoy"></i><span class="side-menu__label">Data Mobil Travel</span></a>
+                </li>
+                <li>
                     <a class="side-menu__item has-link" href="{{route('penumpang')}}"><i
                             class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Data Penumpang</span></a>
-                </li>
-                <li>
-                    <a class="side-menu__item has-link" href="{{route('mobil')}}"><i
-                            class="side-menu__icon fe fe-truck"></i><span class="side-menu__label">Data Mobil Travel</span></a>
-                </li>
-                <li>
-                    <a class="side-menu__item has-link" href="{{route('penjemputan')}}"><i
-                            class="side-menu__icon fe fe-map-pin"></i><span class="side-menu__label">Data Penjemputan</span></a>
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('destinasi')}}"><i
                             class="side-menu__icon fe fe-map"></i><span class="side-menu__label">Data Destinasi</span></a>
                 </li>
                 <li>
-                    <a class="side-menu__item has-link" href="{{route('perusahaan')}}"><i
-                            class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Data Perusahaan</span></a>
+                    <a class="side-menu__item has-link" href="{{route('penjemputan')}}"><i
+                            class="side-menu__icon fe fe-map-pin"></i><span class="side-menu__label">Data Penjemputan</span></a>
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pembayaran')}}"><i
@@ -85,7 +85,7 @@
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('mobil')}}"><i
-                            class="side-menu__icon fe fe-truck"></i><span class="side-menu__label">Data Mobil Travel</span></a>
+                            class="side-menu__icon fe fe-life-buoy"></i><span class="side-menu__label">Data Mobil Travel</span></a>
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('penjemputan')}}"><i
@@ -110,7 +110,7 @@
                 </li>
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pengemudi.riwayatpenjemputan')}}"><i
-                            class="side-menu__icon fe fe-rotate-ccw"></i><span class="side-menu__label">Riwayat Penjemputan</span></a>
+                            class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Riwayat Penjemputan</span></a>
                 </li>
                 @elseif(Auth::user()->role == 'Penumpang')
                 <li>

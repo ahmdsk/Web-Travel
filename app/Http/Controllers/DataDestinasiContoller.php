@@ -3,22 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DataDestinasiContoller extends Controller
 {
     public function index(){
         $data['title']       = 'Data Destinasi';
-        $data['destinasi']   = DB::table('destinasi')
-                            ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
-                            ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
-                            ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
-                            ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tbluser.nama')
-                            ->get();
-        $data['mobil']       = DB::table('tblmobil')
-                            ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
-                            ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
-                            ->get();
+        
+        if(Auth::user()->role == 'Agent'){
+            $cekPerusahaan = DB::table('tblperusahaan')
+                        ->join('tblagent', 'tblagent.perusahaan_id', '=', 'tblperusahaan.id_perusahaan')
+                        ->where('user_id', Auth::user()->id)->first();
+
+            $data['destinasi']   = DB::table('destinasi')
+                    ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
+                    ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tbluser.nama')
+                    ->where('tbldriver.perusahaan_id', $cekPerusahaan->id_perusahaan)
+                    ->get();
+
+            $data['mobil']  = DB::table('tblmobil')
+                    ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->where('tbldriver.perusahaan_id', $cekPerusahaan->id_perusahaan)
+                    ->get();
+        }else{
+            $data['destinasi']   = DB::table('destinasi')
+                    ->join('tblmobil', 'tblmobil.id_mobil', '=', 'destinasi.mobil_id')
+                    ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tbluser.nama')
+                    ->get();
+
+            $data['mobil']  = DB::table('tblmobil')
+                    ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
+                    ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->get();
+        }
 
         return view('Admin.DataDestinasi.Index', $data);
     }

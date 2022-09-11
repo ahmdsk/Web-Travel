@@ -73,7 +73,7 @@ class PesananController extends Controller
     }
 
     function ambilKecamatan(Request $request){
-        $kecamatan  = DB::table('tblpenjemputan')->where('nama_kota', $request->kota)->distinct('kecamatan')->pluck('kecamatan');
+        $kecamatan  = DB::table('tblpenjemputan')->where('nama_kota', $request->kota)->distinct('kecamatan')->get();
         return response()->json([
             'status' => 200,
             'data'   => $kecamatan
@@ -85,6 +85,16 @@ class PesananController extends Controller
         return response()->json([
             'status' => 200,
             'data'   => $cekHargaJemput
+        ]);
+    }
+
+    function waktujemput(Request $request){
+        $waktuJemput = DB::table('tblwaktu_penjemputan')
+                ->where('id_penjemputan', $request->idjemput)->get();
+        
+        return response()->json([
+            'status' => 200,
+            'data'   => $waktuJemput
         ]);
     }
 

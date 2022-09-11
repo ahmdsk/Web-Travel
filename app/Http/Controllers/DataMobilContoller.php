@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DataMobilContoller extends Controller
@@ -23,17 +24,36 @@ class DataMobilContoller extends Controller
 
     public function index(){
         $data['title']  = 'Data Mobil Travel';
-        $data['mobil']  = DB::table('tblmobil')
+
+        if(Auth::user()->role == 'Agent'){
+            $cekPerusahaan = DB::table('tblperusahaan')
+                ->join('tblagent', 'tblagent.perusahaan_id', '=', 'tblperusahaan.id_perusahaan')
+                ->where('user_id', Auth::user()->id)->first();
+
+            $data['mobil']  = DB::table('tblmobil')
                         ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                         ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
                         ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
-                        ->get();
+                        ->where('tbldriver.perusahaan_id', $cekPerusahaan->id_perusahaan)->get();
 
-        $data['driver'] = DB::table('tbldriver')
+            $data['driver'] = DB::table('tbldriver')
                         ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
-                        ->where('status_aktif', 1)->get();
+                        ->where('status_aktif', 1)->where('tbldriver.perusahaan_id', $cekPerusahaan->id_perusahaan)->get();
 
-        $data['perusahaan'] = DB::table('tblperusahaan')->get();
+            $data['perusahaan'] = DB::table('tblperusahaan')->where('id_perusahaan', $cekPerusahaan->id_perusahaan)->get();
+        }else{
+            $data['mobil']  = DB::table('tblmobil')
+                            ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
+                            ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                            ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
+                            ->get();
+    
+            $data['driver'] = DB::table('tbldriver')
+                            ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                            ->where('status_aktif', 1)->get();
+    
+            $data['perusahaan'] = DB::table('tblperusahaan')->get();
+        }
 
         return view('Admin.DataMobilTravel.Index', $data);
     }

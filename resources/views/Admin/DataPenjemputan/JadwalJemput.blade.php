@@ -50,6 +50,10 @@
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="mb-3">
+                                                                    <p>Format Waktu: </p>
+                                                                    <ul>
+                                                                        <li>Jam : Menit (AM / PM)</li>
+                                                                    </ul>
                                                                     <label for="waktu_penjemputan" class="col-form-label">Waktu Penjemputan</label>
                                                                     <input type="time" class="form-control" id="waktu_penjemputan" name="waktu_penjemputan" value="{{$p->waktu_penjemputan}}">
                                                                 </div>
@@ -96,6 +100,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
+                                <p>Format Waktu: </p>
+                                <ul>
+                                    <li>Jam : Menit (AM / PM)</li>
+                                </ul>
                                 <label for="waktu_penjemputan" class="col-form-label">Waktu Penjemputan</label>
                                 <input type="time" class="form-control" id="waktu_penjemputan" name="waktu_penjemputan">
                             </div>

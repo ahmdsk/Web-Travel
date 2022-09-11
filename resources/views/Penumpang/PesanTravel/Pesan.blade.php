@@ -86,6 +86,22 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="form-label">Waktu Keberangkatan</label>
+                                <select name="waktu_jemput" class="form-select" id="waktu_jemput">
+                                    {{-- @foreach ($waktuJemput as $wj)
+                                    <option value="{{$wj->waktu_penjemputan}}">{{$wj->waktu_penjemputan}}</option>
+                                    @endforeach --}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Fasilitas</label>
+                                <input type="text" class="form-control" name="fasilitas" id="fasilitas" value="{{$mobil->fasilitas}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="form-label">Alamat Lengkap Serta Patokan Penjemputan <span class="text-red">*</span></label>
                                 <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat" required>{{Auth::user()->alamat != null ? Auth::user()->alamat : ''}}</textarea>
                             </div>
@@ -185,8 +201,9 @@
                 },
                 success: function(json){
                     if(json.status == 200){
-                        Object.values(json.data).forEach(kecamatan => {
-                            $('#selectKecamatan').append(`<option value="${kecamatan}">${kecamatan}</option>`);
+                        Object.values(json.data).forEach(data => {
+                            $('#selectKecamatan').append(`<option value="${data.kecamatan}">${data.kecamatan}</option>`);
+                            $('#selectKecamatan').data('idjemput', data.id);
                         });
                     }
                 }
@@ -206,6 +223,22 @@
                         $('#harga_jemput').val(json.data.harga);
 
                         $('#total_bayar').val(Number($('#harga_jemput').val()) + Number($('#harga_destinasi').val()));
+
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{route('penumpang.waktujemput')}}",
+                            data: {
+                                'idjemput': $('#selectKecamatan').data('idjemput')
+                            },
+                            success: function(json2){
+                                if(json2.status == 200){
+                                    $('#waktu_jemput').empty();
+                                    Object.values(json2.data).forEach(data2 => {
+                                        $('#waktu_jemput').append(`<option value="${data2.waktu_penjemputan}">${data2.waktu_penjemputan}</option>`);
+                                    });
+                                }
+                            }
+                        });
                     }
                 }
             });
