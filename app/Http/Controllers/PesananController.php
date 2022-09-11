@@ -232,10 +232,10 @@ class PesananController extends Controller
                     ->first();
 
         $jumlahRating = DB::table('tblrating')
-                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id_pesanan')
                     ->where('mobil_id', $id)->count();
         $dataRating = DB::table('tblrating')
-                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id')
+                    ->join('tblpemesanan', 'tblpemesanan.id_pesanan', '=', 'tblrating.id_pesanan')
                     ->where('mobil_id', $id)->sum('rating');
 
         if($jumlahRating != 0 && $dataRating != 0){
