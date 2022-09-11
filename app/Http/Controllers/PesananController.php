@@ -88,6 +88,28 @@ class PesananController extends Controller
         ]);
     }
 
+    public function uploadBuktiBayar(Request $request){
+        $file = $request->bukti_bayar;
+        if($file != null){
+            $newFile = rand().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('bukti_bayar/'), $newFile);
+
+            $updateBukti = DB::table('tblpemesanan')
+                    ->where('id_pesanan', $request->id_pesanan)
+                    ->update([
+                        'bukti_bayar' => $newFile
+                    ]);
+
+            if($updateBukti){
+                return back()->with('success', 'Berhasil Update Bukti Bayar!');
+            }else{
+                return back()->with('warning', 'Gagal Update Bukti Bayar!');
+            }
+        }else{
+            return back()->with('warning', 'Gagal Mengupload Bukti Bayar!');
+        }
+    }
+
     public function pesan(){
         $data['title']       = 'Pesan Travel';
         $data['ibukota']     = DB::table('tblpenjemputan')->distinct('nama_kota')->pluck('nama_kota');
@@ -204,6 +226,7 @@ class PesananController extends Controller
                     ->join('tbldriver', 'tbldriver.id_driver', '=', 'tblmobil.driver_id')
                     ->join('tblperusahaan', 'tblperusahaan.id_perusahaan', '=', 'tbldriver.perusahaan_id')
                     ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                    ->select('destinasi.*', 'tblmobil.*', 'tbldriver.*', 'tblperusahaan.*', 'tbluser.nama')
                     ->where('destinasi.id', $id)
                     ->orderBy('destinasi.id', 'desc')
                     ->first();

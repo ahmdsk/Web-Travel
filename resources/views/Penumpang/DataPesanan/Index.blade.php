@@ -56,7 +56,8 @@
                                     @if ($p->bukti_bayar != null)
                                         <img src="{{asset('bukti_bayar/'.$p->bukti_bayar)}}" style="width: 100px">
                                     @else
-                                        Tidak Ada Bukti Bayar
+                                        Tidak Ada Bukti Bayar <br>
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#uploadBuktiBayar-{{$p->id_pesanan}}">Upload Bukti</button>
                                     @endif
                                 </td>
                                 <td class="text-center">
@@ -116,6 +117,37 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn ripple btn-success" type="submit" id="btnRating">Beri Rating</button>
+                                                    <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="uploadBuktiBayar-{{$p->id_pesanan}}">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content modal-content-demo">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title">Upload Bukti Pembayaran</h6>
+                                                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{route('uploadBuktiBayar')}}" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="id_pesanan" value="{{$p->id_pesanan}}">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="bukti_bayar" class="col-form-label text-center">Upload Bukti Bayar <span class="text-muted" style="font-size: 10px">Maksimal 2MB</span></label>
+                                                                <input class="form-control" type="file" name="bukti_bayar" id="bukti_bayar">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn ripple btn-success" type="submit">Upload</button>
                                                     <button class="btn ripple btn-danger" data-bs-dismiss="modal" type="button">Batal</button>
                                                 </div>
                                             </form>

@@ -140,6 +140,9 @@ Route::middleware('auth')->group(function() {
         // Data Pesanan
         Route::get('/data-pesanan', [PesananController::class, 'dataPesanan'])->name('penumpang.pesanan');
 
+        // Upload Bukti Bayar
+        Route::post('/buktibayar', [PesananController::class, 'uploadBuktiBayar'])->name('uploadBuktiBayar');
+
         // Beri Rating
         Route::get('/rating/{id}', [RatingController::class, 'beriRating'])->name('beriRating');
         Route::post('/rating/{id}', [RatingController::class, 'ratingPost'])->name('rating');
