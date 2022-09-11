@@ -141,8 +141,8 @@
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="mb-3">
-                                                                    <label for="alamat" class="col-form-label">Alamat</label>
-                                                                    <input type="text" class="form-control" id="alamat" name="alamat" value="{{$p->alamat}}">
+                                                                    <label for="alamat" class="col-form-label">Alamat Lengkap</label>
+                                                                    <textarea class="form-control" id="alamat" name="alamat">{{$p->alamat}}</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -259,8 +259,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label for="alamat" class="col-form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat">
+                                <label for="alamat" class="col-form-label">Alamat Lengkap</label>
+                                <textarea class="form-control" id="alamat" name="alamat"></textarea>
                             </div>
                         </div>
                     </div>
