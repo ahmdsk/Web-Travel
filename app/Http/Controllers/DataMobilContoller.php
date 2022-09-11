@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\DB;
 
 class DataMobilContoller extends Controller
 {
+    public function cariPerusahaan(Request $request){
+        $perusahaan = DB::table('tblperusahaan')
+                ->join('tbldriver', 'tbldriver.perusahaan_id', '=', 'tblperusahaan.id_perusahaan')
+                ->join('tbluser', 'tbluser.id', '=', 'tbldriver.user_id')
+                ->where('status_aktif', 1)
+                ->where('id_perusahaan', $request->id_perusahaan)
+                ->get();
+        
+        return response()->json([
+            'status' => 200,
+            'data'   => $perusahaan
+        ]);
+    }
+
     public function index(){
         $data['title']  = 'Data Mobil Travel';
         $data['mobil']  = DB::table('tblmobil')

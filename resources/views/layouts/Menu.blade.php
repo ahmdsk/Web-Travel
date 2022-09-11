@@ -100,10 +100,10 @@
                             class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Konfirmasi Pembayaran</span><span class="badge bg-green br-5 side-badge blink-text pb-1">{{$pesanan}}</span></a>
                 </li>
                 @elseif(Auth::user()->role == 'Pengemudi')
-                <li>
+                {{-- <li>
                     <a class="side-menu__item has-link" href="{{route('pengemudi.cekjadwal')}}"><i
                             class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Cek Jadwal</span></a>
-                </li>
+                </li> --}}
                 <li>
                     <a class="side-menu__item has-link" href="{{route('pengemudi.penjemputan')}}"><i
                             class="side-menu__icon fe fe-map"></i><span class="side-menu__label">Cek Penjemputan</span></a>

@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function() {
         Route::post('/data-mobil/edit', [DataMobilContoller::class, 'editMobil'])->name('mobil.edit');
         Route::get('/data-mobil/hapus/{id}', [DataMobilContoller::class, 'hapusMobil']);
 
+        Route::get('/data-mobil/cariperusahaan', [DataMobilContoller::class, 'cariPerusahaan'])->name('mobil.perusahaan');
+
         // Data Perusahaan
         Route::get('/data-perusahaan', [DataPerusahaanController::class, 'index'])->name('perusahaan');
         Route::post('/data-perusahaan', [DataPerusahaanController::class, 'tambahPerusahaan'])->name('perusahaan.tambah');

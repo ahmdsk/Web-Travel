@@ -66,8 +66,8 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
-                                                                    <label for="id_perusahaan" class="col-form-label">Nama Perusahaan</label> <br>
-                                                                    <select id="id_perusahaan" name="id_perusahaan" class="form-select">
+                                                                    <label for="id_pengemudi_edit" class="col-form-label">Nama Perusahaan</label> <br>
+                                                                    <select id="id_perusahaan_edit" name="id_perusahaan" class="form-select">
                                                                         @php
                                                                             $idPerusahaanTerpilih = $m->id_perusahaan;
                                                                         @endphp
@@ -85,8 +85,8 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
-                                                                    <label for="id_pengemudi" class="col-form-label">Pengemudi</label> <br>
-                                                                    <select id="id_pengemudi" name="id_pengemudi" class="form-select">
+                                                                    <label for="id_pengemudi_edit" class="col-form-label">Pengemudi</label> <br>
+                                                                    <select id="id_pengemudi_edit" name="id_pengemudi" class="form-select">
                                                                         @php
                                                                             $idDriverTerpilih = $m->id_driver;
                                                                         @endphp
@@ -202,12 +202,12 @@
                             <div class="mb-3">
                                 <label for="id_pengemudi" class="col-form-label">Pengemudi</label>
                                 <select id="id_pengemudi" name="id_pengemudi" class="form-select">
-                                    <option selected disabled>Pilih Pengemudi</option>
+                                    {{-- <option selected disabled>Pilih Pengemudi</option>
                                     @forelse ($driver as $d)
                                     <option value="{{$d->id_driver}}">{{$d->nama}}</option>
                                     @empty
                                     <option value="">Tidak Ada Data</option>
-                                    @endforelse
+                                    @endforelse --}}
                                 </select>
                             </div>
                         </div>
@@ -295,5 +295,23 @@
             }
         })
     }
+
+    $('#id_perusahaan').click(function(){
+        $.ajax({
+            type: 'GET',
+            url: "{{route('mobil.perusahaan')}}",
+            data: {
+                'id_perusahaan': $('#id_perusahaan').val()
+            },
+            success: function(json){
+                if(json.status == 200){
+                    $('#id_pengemudi').empty();
+                    Object.values(json.data).forEach(perusahaan => {
+                        $('#id_pengemudi').append(`<option value="${perusahaan.id_driver}">${perusahaan.nama}</option>`);
+                    });
+                }
+            }
+        })
+    });
 </script>
 @endpush

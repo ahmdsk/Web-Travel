@@ -20,6 +20,7 @@
                                 <th class="wd-20p border-bottom-0">Tanggal Lahir</th>
                                 <th class="wd-15p border-bottom-0">Umur</th>
                                 <th class="wd-10p border-bottom-0">Perusahaan</th>
+                                <th class="wd-10p border-bottom-0">Status</th>
                                 <th class="wd-25p border-bottom-0">Foto Pengemudi</th>
                                 <th class="wd-25p border-bottom-0">Opsi</th>
                             </tr>
@@ -32,6 +33,13 @@
                                 <td>{{$p->tgl_lahir}}</td>
                                 <td>{{$p->umur}}</td>
                                 <td>{{$p->nama_perusahaan}}</td>
+                                <td>
+                                    @if ($p->status_aktif == 1)
+                                        Aktif
+                                    @else
+                                        Non-Aktif
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($p->foto != null)
                                         <a href="{{asset('foto/'.$p->foto)}}" target="_blank"><img src="{{asset('foto/'.$p->foto)}}" alt="Gambar {{$p->nama}}" style="width: 100px"></a>
